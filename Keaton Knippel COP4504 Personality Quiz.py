@@ -1,8 +1,7 @@
-def personality_quiz():
+def personality_quiz():    
     print("This is a personality quiz! You're about to learn a lot about yourself ;D")
     print("Which Star Wars Character are you?.\n")
-
-    # personality categories
+    
     personalities = {
         "A": 0,  # Han Solo
         "B": 0,  # Princes Leia
@@ -10,7 +9,6 @@ def personality_quiz():
         "D": 0,  # Darth Vader
     }
 
-    # all of the questions and choices written out
     questions = [
         {
             "question": "Those pesky womp rats are eating all your funky space cabbage again! How do you deal with these vermin?",
@@ -50,34 +48,112 @@ def personality_quiz():
         },
     ]
 
-    # quiz loop
+    take_quiz(questions, personalities)
+
+
+def lotr_quiz():
+    print("You've chosen the Lord of The Rings Quiz")
+    print("Answer the following questions to find out which Lord of the Rings Character you are most like\n")
+
+    careers = {
+        "A": 0,  # Aragorn
+        "B": 0,  # Gandalf
+        "C": 0,  # Bilbo Baggins
+        "D": 0,  # Treebeard
+    }
+
+    questions = [
+        {
+            "question": "Dinner time! What are you cooking up for dinner?",
+            "choices": {
+                "A": "Ordering delivery, no way im making food myself.",
+                "B": "A complicated and involved recipe, but one you know well and have perfected.",
+                "C": "Carb-heavy, fattening deliciousness.",
+                "D": "What's a meal? It's snack time!",
+            },
+        },
+        {
+            "question": "Time to go to work! Where are you going again?",
+            "choices": {
+                "A": "Military :)",
+                "B": "I'm homeless, jobless, but so cool B)",
+                "C": "Oh me? I'm a farmer.",
+                "D": "Retired, I'm chilling in my crib as per usual.",
+            },
+        },
+        {
+            "question": "Time for excercise! What are we focusing on today?",
+            "choices": {
+                "A": "Cardio all the way.",
+                "B": "Yoga and stretches.",
+                "C": "I don't excercise, I need that time to eat more food :D",
+                "D": "Core excercises, gotta get those rock hard abs.",
+            },
+        },
+        {
+            "question": "Finally, you can relax after a long day. What music are you listening to?",
+            "choices": {
+                "A": "Taiko arrangements.",
+                "B": "I'm singing karaoke by myself!",
+                "C": "Folk music with lots of fiddle solos",
+                "D": "Hungarian throat singing.",
+            },
+        },
+    ]
+
+    take_quiz(questions, careers)
+
+
+def take_quiz(questions, categories):
     for i, q in enumerate(questions, 1):
         print(f"\nQuestion {i}: {q['question']}")
         for key, value in q["choices"].items():
             print(f"{key}: {value}")
         while True:
             answer = input("Choose A, B, C, or D: ").strip().upper()
-            if answer in personalities:
-                personalities[answer] += 1
+            if answer in categories:
+                categories[answer] += 1
                 break
             print("Invalid choice. Please select A, B, C, or D.")
 
-    # chooses the personality type that has the highest score
-    max_personality = max(personalities, key=personalities.get)
-    personality_descriptions = {
-        "A": "You are Han Solo. Strong and Independent, if not a bit stubborn.",
-        "B": "You are Princess Leia! A natural born leader who cares deeply about those around them.",
-        "C": "You are Yoda! Calm, methodical, and perhaps a bit of a hermit.",
-        "D": "You are Darth Vader! Comically evil, you likely have unresolved childhood trauma.",
+    # Determine the type with the highest score
+    max_category = max(categories, key=categories.get)
+
+    descriptions = {
+        "A": "You are Aragorn! Athletic, and determined in some way or another.",
+        "B": "You are Gandalf! Very independent and wise.",
+        "C": "You are Bilbo! An excellent host, and empathetic towards others.",
+        "D": "You are Treebeard! You got the tree guy somehow, but at least you're similar to someone.",
     }
 
     print("\nYour Results!")
-    print(personality_descriptions[max_personality])
+    print(descriptions[max_category])
 
     # Show scores
     print("\nScores by category:")
-    for category, score in personalities.items():
+    for category, score in categories.items():
         print(f"{category}: {score}")
 
+
+def main():
+    print("We've got a few quizzes to choose from! Check them out below.")
+    print("Choose one of the following quizzes:")
+    print("1. Star Wars Personality Quiz")
+    print("2. Lord of The Rings Character Quiz")
+
+    while True:
+        choice = input("Enter 1 or 2: ").strip()
+        if choice == "1":
+            personality_quiz()
+            break
+        elif choice == "2":
+            lotr_quiz()
+            break
+        else:
+            print("Invalid choice. Please select 1 or 2.")
+
+    print("\nThank you so much for taking the quiz!")
+
+
 if __name__ == "__main__":
-    personality_quiz()
+    main()
