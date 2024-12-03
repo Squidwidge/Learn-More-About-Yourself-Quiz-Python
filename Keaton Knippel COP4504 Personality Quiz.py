@@ -1,159 +1,156 @@
-def personality_quiz():    
-    print("This is a personality quiz! You're about to learn a lot about yourself ;D")
-    print("Which Star Wars Character are you?.\n")
-    
-    personalities = {
-        "A": 0,  # Han Solo
-        "B": 0,  # Princes Leia
-        "C": 0,  # Yoda
-        "D": 0,  # Darth Vader
-    }
+import tkinter as tk
+from tkinter import messagebox
 
-    questions = [
-        {
-            "question": "Those pesky womp rats are eating all your funky space cabbage again! How do you deal with these vermin?",
-            "choices": {
-                "A": "Pay a buddy of yours to take care of them for you.",
-                "B": "Finally put that blaster of yours to good use.",
-                "C": "Push them far far away with the force.",
-                "D": "Crush them with all of your anger. DO IT.",
+
+class QuizApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Quiz App")
+        self.root.geometry("500x400")
+        self.current_question = 0
+        self.current_quiz = None
+        self.scores = {}
+
+        self.main_menu()
+
+    def main_menu(self):
+        self.clear_window()
+        tk.Label(self.root, text="Choose a Quiz!", font=("Calibri", 18)).pack(pady=20)
+
+        tk.Button(self.root, text="Star Wars Personality Quiz", command=self.start_personality_quiz, width=30).pack(pady=10)
+        tk.Button(self.root, text="Lord of The Rings Character Quiz", command=self.start_lotr_quiz, width=30).pack(pady=10)
+
+    def start_personality_quiz(self):
+        self.start_quiz("Star Wars Personality Quiz", [
+            {
+                "question": "Those pesky womp rats are eating all your funky space cabbage again! How do you deal with these vermin?",
+                "choices": {
+                    "A": "Pay a buddy of yours to take care of them for you.",
+                    "B": "Finally put that blaster of yours to good use.",
+                    "C": "Push them far far away with the force.",
+                    "D": "Crush them with all of your anger. DO IT.",
+                },
             },
-        },
-        {
-            "question": "What's your ideal vacation?",
-            "choices": {
-                "A": "Exploring ancient ruins and diving shipwrecks.",
-                "B": "In a bulstling metropolis with plenty of things to do and see.",
-                "C": "At a cottage in the wilderness, a good distance away from your problems.",
-                "D": "Climbing up the fiery molten crags of a volcano. Feel the burn!",
+            {
+                "question": "What's your ideal vacation?",
+                "choices": {
+                    "A": "Exploring ancient ruins and diving shipwrecks.",
+                    "B": "In a bustling metropolis with plenty of things to do and see.",
+                    "C": "At a cottage in the wilderness, a good distance away from your problems.",
+                    "D": "Climbing up the fiery molten crags of a volcano. Feel the burn!",
+                },
             },
-        },
-        {
-            "question": "A powerful individual has offered you a place at his side, and all you have to do is abandon all morals and ethics! What do you do?",
-            "choices": {
-                "A": "Every man for himself! You don't want that responsibility.",
-                "B": "Organize your local community against him.",
-                "C": "Live a life outside the grid, trying your best to escape the system.",
-                "D": "Finally, power! Nothing else matters, time to rule.",
+            {
+                "question": "A powerful individual has offered you a place at his side, and all you have to do is abandon all morals and ethics! What do you do?",
+                "choices": {
+                    "A": "Every man for himself! You don't want that responsibility.",
+                    "B": "Organize your local community against him.",
+                    "C": "Live a life outside the grid, trying your best to escape the system.",
+                    "D": "Finally, power! Nothing else matters, time to rule.",
+                },
             },
-        },
-        {
-            "question": "What gets you out of bed in the morning?",
-            "choices": {
-                "A": "All the MONEY I'm about to make. Woohoo!",
-                "B": "There are people who care about me, and I'm doing my best to make a difference.",
-                "C": "I'm about to make the absolutely best breakfast ever imagined.",
-                "D": "I exist to spite my enemies, and I just got a new idea to cause them pain.",
+            {
+                "question": "What gets you out of bed in the morning?",
+                "choices": {
+                    "A": "All the MONEY I'm about to make. Woohoo!",
+                    "B": "There are people who care about me, and I'm doing my best to make a difference.",
+                    "C": "I'm about to make the absolutely best breakfast ever imagined.",
+                    "D": "I exist to spite my enemies, and I just got a new idea to cause them pain.",
+                },
             },
-        },
-    ]
+        ], {
+            "A": "You are Han Solo! Charismatic and always ready for an adventure.",
+            "B": "You are Princess Leia! A leader with a strong sense of justice.",
+            "C": "You are Yoda! Wise and calm in challenging situations.",
+            "D": "You are Darth Vader! Driven by power and ambition.",
+        })
 
-    take_quiz(questions, personalities)
-
-
-def lotr_quiz():
-    print("You've chosen the Lord of The Rings Quiz")
-    print("Answer the following questions to find out which Lord of the Rings Character you are most like\n")
-
-    careers = {
-        "A": 0,  # Aragorn
-        "B": 0,  # Gandalf
-        "C": 0,  # Bilbo Baggins
-        "D": 0,  # Treebeard
-    }
-
-    questions = [
-        {
-            "question": "Dinner time! What are you cooking up for dinner?",
-            "choices": {
-                "A": "Ordering delivery, no way im making food myself.",
-                "B": "A complicated and involved recipe, but one you know well and have perfected.",
-                "C": "Carb-heavy, fattening deliciousness.",
-                "D": "What's a meal? It's snack time!",
+    def start_lotr_quiz(self):
+        self.start_quiz("Lord of The Rings Character Quiz", [
+            {
+                "question": "Dinner time! What are you cooking up for dinner?",
+                "choices": {
+                    "A": "Ordering delivery, no way I'm making food myself.",
+                    "B": "A complicated and involved recipe, but one you know well and have perfected.",
+                    "C": "Carb-heavy, fattening deliciousness.",
+                    "D": "What's a meal? It's snack time!",
+                },
             },
-        },
-        {
-            "question": "Time to go to work! Where are you going again?",
-            "choices": {
-                "A": "Military :)",
-                "B": "I'm homeless, jobless, but so cool B)",
-                "C": "Oh me? I'm a farmer.",
-                "D": "Retired, I'm chilling in my crib as per usual.",
+            {
+                "question": "Time to go to work! Where are you going again?",
+                "choices": {
+                    "A": "Military :)",
+                    "B": "I'm homeless, jobless, but so cool B)",
+                    "C": "Oh me? I'm a farmer.",
+                    "D": "Retired, I'm chilling in my crib as per usual.",
+                },
             },
-        },
-        {
-            "question": "Time for excercise! What are we focusing on today?",
-            "choices": {
-                "A": "Cardio all the way.",
-                "B": "Yoga and stretches.",
-                "C": "I don't excercise, I need that time to eat more food :D",
-                "D": "Core excercises, gotta get those rock hard abs.",
+            {
+                "question": "Time for exercise! What are we focusing on today?",
+                "choices": {
+                    "A": "Cardio all the way.",
+                    "B": "Yoga and stretches.",
+                    "C": "I don't exercise, I need that time to eat more food :D",
+                    "D": "Core exercises, gotta get those rock-hard abs.",
+                },
             },
-        },
-        {
-            "question": "Finally, you can relax after a long day. What music are you listening to?",
-            "choices": {
-                "A": "Taiko arrangements.",
-                "B": "I'm singing karaoke by myself!",
-                "C": "Folk music with lots of fiddle solos",
-                "D": "Hungarian throat singing.",
+            {
+                "question": "Finally, you can relax after a long day. What music are you listening to?",
+                "choices": {
+                    "A": "Taiko arrangements.",
+                    "B": "I'm singing karaoke by myself!",
+                    "C": "Folk music with lots of fiddle solos.",
+                    "D": "Hungarian throat singing.",
+                },
             },
-        },
-    ]
+        ], {
+            "A": "You are Aragorn! Athletic and determined.",
+            "B": "You are Gandalf! Independent and wise.",
+            "C": "You are Bilbo Baggins! Empathetic and an excellent host.",
+            "D": "You are Treebeard! Wise and deeply rooted in tradition.",
+        })
 
-    take_quiz(questions, careers)
+    def start_quiz(self, title, questions, descriptions):
+        self.clear_window()
+        self.current_quiz = {"title": title, "questions": questions, "descriptions": descriptions}
+        self.scores = {key: 0 for key in descriptions.keys()}
+        self.current_question = 0
+        self.show_question()
 
+    def show_question(self):
+        question_data = self.current_quiz["questions"][self.current_question]
+        self.clear_window()
+        tk.Label(self.root, text=self.current_quiz["title"], font=("Calibri", 18)).pack(pady=10)
+        tk.Label(self.root, text=question_data["question"], wraplength=400, font=("Calibri", 14)).pack(pady=10)
 
-def take_quiz(questions, categories):
-    for i, q in enumerate(questions, 1):
-        print(f"\nQuestion {i}: {q['question']}")
-        for key, value in q["choices"].items():
-            print(f"{key}: {value}")
-        while True:
-            answer = input("Choose A, B, C, or D: ").strip().upper()
-            if answer in categories:
-                categories[answer] += 1
-                break
-            print("Invalid choice. Please select A, B, C, or D.")
+        for key, value in question_data["choices"].items():
+            tk.Button(self.root, text=f"{key}: {value}", command=lambda k=key: self.record_answer(k), wraplength=400).pack(pady=5)
 
-    # Determine the type with the highest score
-    max_category = max(categories, key=categories.get)
-
-    descriptions = {
-        "A": "You are Aragorn! Athletic, and determined in some way or another.",
-        "B": "You are Gandalf! Very independent and wise.",
-        "C": "You are Bilbo! An excellent host, and empathetic towards others.",
-        "D": "You are Treebeard! You got the tree guy somehow, but at least you're similar to someone.",
-    }
-
-    print("\nYour Results!")
-    print(descriptions[max_category])
-
-    # Show scores
-    print("\nScores by category:")
-    for category, score in categories.items():
-        print(f"{category}: {score}")
-
-
-def main():
-    print("We've got a few quizzes to choose from! Check them out below.")
-    print("Choose one of the following quizzes:")
-    print("1. Star Wars Personality Quiz")
-    print("2. Lord of The Rings Character Quiz")
-
-    while True:
-        choice = input("Enter 1 or 2: ").strip()
-        if choice == "1":
-            personality_quiz()
-            break
-        elif choice == "2":
-            lotr_quiz()
-            break
+    def record_answer(self, choice):
+        self.scores[choice] += 1
+        self.current_question += 1
+        if self.current_question < len(self.current_quiz["questions"]):
+            self.show_question()
         else:
-            print("Invalid choice. Please select 1 or 2.")
+            self.show_results()
 
-    print("\nThank you so much for taking the quiz!")
+    def show_results(self):
+        max_score = max(self.scores.values())
+        result = [key for key, value in self.scores.items() if value == max_score][0]
+        description = self.current_quiz["descriptions"][result]
+
+        self.clear_window()
+        tk.Label(self.root, text="Quiz Results", font=("Calibri", 18)).pack(pady=10)
+        tk.Label(self.root, text=description, font=("Calibri", 14), wraplength=400).pack(pady=20)
+
+        tk.Button(self.root, text="Return to Main Menu", command=self.main_menu).pack(pady=10)
+
+    def clear_window(self):
+        for widget in self.root.winfo_children():
+            widget.destroy()
 
 
 if __name__ == "__main__":
-    main()
+    root = tk.Tk()
+    app = QuizApp(root)
+    root.mainloop()
